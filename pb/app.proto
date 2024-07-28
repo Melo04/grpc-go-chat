@@ -7,16 +7,22 @@ import "google/protobuf/timestamp.proto";
 option go_package = "github.com/Melo04/grpc-chat/pb";
 
 service ChatServer {
+    // Unary RPC to create a new chat server
     rpc CreateChatServer(CreateChatServerRequest) returns (CreateChatServerResponse) {}
 
+    // Unary RPC to join a chat server
     rpc JoinChatServer(JoinChatServerRequest) returns (JoinChatServerResponse) {}
 
+    // Unary RPC to leave a chat server
     rpc LeaveChatServer(LeaveChatServerRequest) returns (LeaveChatServerResponse) {}
 
+    // Server streaming RPC to list messages in a chat server
     rpc ListMessages(ListMessagesRequest) returns (stream Message) {}
 
+    // Client Streaming RPC to send messages to a chat server
     rpc SendMessages(stream SendMessageRequest) returns (SendMessagesResponse) {}
 
+    // Bidirectional streaming RPC to chat in a chat server
     rpc Chat(stream ChatMessage) returns (stream ChatMessage) {}
 }
 
