@@ -22,11 +22,17 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ChatServerClient interface {
+	// Unary RPC to create a new chat server
 	CreateChatServer(ctx context.Context, in *CreateChatServerRequest, opts ...grpc.CallOption) (*CreateChatServerResponse, error)
+	// Unary RPC to join a chat server
 	JoinChatServer(ctx context.Context, in *JoinChatServerRequest, opts ...grpc.CallOption) (*JoinChatServerResponse, error)
+	// Unary RPC to leave a chat server
 	LeaveChatServer(ctx context.Context, in *LeaveChatServerRequest, opts ...grpc.CallOption) (*LeaveChatServerResponse, error)
+	// Server streaming RPC to list messages in a chat server
 	ListMessages(ctx context.Context, in *ListMessagesRequest, opts ...grpc.CallOption) (ChatServer_ListMessagesClient, error)
+	// Client Streaming RPC to send messages to a chat server
 	SendMessages(ctx context.Context, opts ...grpc.CallOption) (ChatServer_SendMessagesClient, error)
+	// Bidirectional streaming RPC to chat in a chat server
 	Chat(ctx context.Context, opts ...grpc.CallOption) (ChatServer_ChatClient, error)
 }
 
@@ -166,11 +172,17 @@ func (x *chatServerChatClient) Recv() (*ChatMessage, error) {
 // All implementations must embed UnimplementedChatServerServer
 // for forward compatibility
 type ChatServerServer interface {
+	// Unary RPC to create a new chat server
 	CreateChatServer(context.Context, *CreateChatServerRequest) (*CreateChatServerResponse, error)
+	// Unary RPC to join a chat server
 	JoinChatServer(context.Context, *JoinChatServerRequest) (*JoinChatServerResponse, error)
+	// Unary RPC to leave a chat server
 	LeaveChatServer(context.Context, *LeaveChatServerRequest) (*LeaveChatServerResponse, error)
+	// Server streaming RPC to list messages in a chat server
 	ListMessages(*ListMessagesRequest, ChatServer_ListMessagesServer) error
+	// Client Streaming RPC to send messages to a chat server
 	SendMessages(ChatServer_SendMessagesServer) error
+	// Bidirectional streaming RPC to chat in a chat server
 	Chat(ChatServer_ChatServer) error
 	mustEmbedUnimplementedChatServerServer()
 }

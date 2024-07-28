@@ -9,3 +9,18 @@ This is a real-time chat server built using gRPC and Golang. It serves as a fund
 
 ### How to run
 1. Clone the repository
+```bash
+git clone https://github.com/Melo04/grpc-go-chat.git
+```
+2. Install the dependencies
+```bash
+make install
+```
+3. Run the server
+```bash
+make server
+```
+4. Run the client
+```bash
+make client
+```
