@@ -1,4 +1,4 @@
-package server
+package main
 
 import (
 	"context"
@@ -59,7 +59,7 @@ func (s *server) JoinChatServer(ctx context.Context, req *pb.JoinChatServerReque
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	welcomeMessage := req.GetUsername() + " just slid into the server " + req.GetServerId()
+	welcomeMessage := req.GetUsername() + " just slid into the server " + s.servers[req.GetServerId()].Name
 	return &pb.JoinChatServerResponse{WelcomeMessage: welcomeMessage}, nil
 }
 

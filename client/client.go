@@ -1,4 +1,4 @@
-package client
+package main
 
 import (
 	"context"
@@ -10,6 +10,7 @@ import (
 	pb "github.com/Melo04/grpc-chat/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 var (
@@ -64,7 +65,7 @@ func listMessages(client pb.ChatServerClient, serverID, channelId string) {
 		if err != nil {
 			log.Fatalf("error receiving message: %v", err)
 		}
-		log.Printf("%s ==> Message from %s: %s", msg.Timestamp, msg.Username, msg.Text)
+		log.Printf("Message from %s: %s", msg.Username, msg.Text)
 	}
 }
 
@@ -79,7 +80,7 @@ func sendMessages(client pb.ChatServerClient, serverID, channelID, username, tex
 			ServerId: serverID,
 			ChannelId: channelID,
 			Username: username,
-			Text: text,
+			Text: time.Now().Format(time.RFC3339) + ": " + text,
 		}); err != nil {
 			log.Fatalf("failed to send message: %v", err)
 		}
@@ -91,6 +92,39 @@ func sendMessages(client pb.ChatServerClient, serverID, channelID, username, tex
 		log.Fatalf("failed to receive response: %v", err)
 	}
 	log.Printf("Messages sent: %d", reply.MessageCount)
+}
+
+func chat(client pb.ChatServerClient, serverID, channelID, username, text string) {
+	stream, err := client.Chat(context.Background())
+	if err != nil {
+		log.Fatalf("failed to send message: %v", err)
+	}
+
+	go func() {
+		for i := 0; i < 5; i++ {
+			if err := stream.Send(&pb.ChatMessage{
+				ServerId: serverID,
+				ChannelId: channelID,
+				Username: username,
+				Text: time.Now().Format(time.RFC3339) + ": " + text,
+				Timestamp: timestamppb.Now(),
+			}); err != nil {
+				log.Fatalf("failed to send message: %v", err)
+			}
+		time.Sleep(1 * time.Second)
+		}
+	}()
+
+	for {
+		msg, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatalf("error receiving message: %v", err)
+		}
+		log.Printf("Message received from %s: %s", msg.Username, msg.Text)
+	}
 }
 
 func main() {
@@ -108,12 +142,15 @@ func main() {
 	client := pb.NewChatServerClient(conn)
 
 	// Create a chat server
-	serverID := createChatServer(client, "chat-server")
+	serverID := createChatServer(client, "grpc-golang-chat")
 
 	// Join the chat server
 	joinChatServer(client, serverID, "user1")
 
 	// List messages
 	go listMessages(client, serverID, "general")
-	go sendMessages(client, serverID, "general", "user1", "Hello, World!")
+	go sendMessages(client, serverID, "general", "user1", "Hello from client")
+
+	// Chat
+	chat(client, serverID, "general", "user1", "Calling from bidirectional stream")
 }
