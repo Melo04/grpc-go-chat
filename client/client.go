@@ -13,9 +13,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-var (
-	serverAddr         = flag.String("addr", "localhost:50051", "The server address in the format of host:port")
-)
+var serverAddr = flag.String("addr", "localhost:50051", "The server address in the format of host:port")
 
 func createChatServer(client pb.ChatServerClient, serverName string) string {
 	resp, err := client.CreateChatServer(context.Background(), &pb.CreateChatServerRequest{ServerName: serverName})
@@ -153,4 +151,7 @@ func main() {
 
 	// Chat
 	chat(client, serverID, "general", "user1", "Calling from bidirectional stream")
+
+	// Leave the chat server
+	leaveChatServer(client, serverID, "user1")
 }

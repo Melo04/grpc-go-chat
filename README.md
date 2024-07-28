@@ -1,8 +1,8 @@
 ## gRPC Chat Server Golang
-This is a real-time chat server built using gRPC and Golang. It serves as a fundamental project for me to learn gRPC, concurrency, Mutex and channels in Golang. The concept is similar to Discord, allowing users to create servers, join servers, send messages, and engage in real-time communication.
+This is a real-time chat server built using gRPC and Golang. It serves as a fundamental project for me to learn gRPC, concurrency, mutex and channels. The concept of the chat server is similar to Discord, allowing users to create servers, join servers, send messages, and engage in real-time communication.
 
 ### Features
-- Unary RPC: CreateChatServer, JoinChatServer, LeaveChatServer
+- Unary RPC: Login, CreateChatServer, JoinChatServer, LeaveChatServer
 - Server-side streaming RPC: SendMessages
 - Client-side streaming RPC: ListMessages
 - Bidirectional streaming RPC: Chat
@@ -20,7 +20,7 @@ make install
 ```bash
 make server
 ```
-4. Run the client
+4. Open a new terminal and run the client
 ```bash
 make client
 ```

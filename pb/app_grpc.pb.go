@@ -22,6 +22,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ChatServerClient interface {
+	// Unary RPC to login
+	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	// Unary RPC to create a new chat server
 	CreateChatServer(ctx context.Context, in *CreateChatServerRequest, opts ...grpc.CallOption) (*CreateChatServerResponse, error)
 	// Unary RPC to join a chat server
@@ -42,6 +44,15 @@ type chatServerClient struct {
 
 func NewChatServerClient(cc grpc.ClientConnInterface) ChatServerClient {
 	return &chatServerClient{cc}
+}
+
+func (c *chatServerClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	out := new(LoginResponse)
+	err := c.cc.Invoke(ctx, "/pb.ChatServer/Login", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *chatServerClient) CreateChatServer(ctx context.Context, in *CreateChatServerRequest, opts ...grpc.CallOption) (*CreateChatServerResponse, error) {
@@ -172,6 +183,8 @@ func (x *chatServerChatClient) Recv() (*ChatMessage, error) {
 // All implementations must embed UnimplementedChatServerServer
 // for forward compatibility
 type ChatServerServer interface {
+	// Unary RPC to login
+	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	// Unary RPC to create a new chat server
 	CreateChatServer(context.Context, *CreateChatServerRequest) (*CreateChatServerResponse, error)
 	// Unary RPC to join a chat server
@@ -191,6 +204,9 @@ type ChatServerServer interface {
 type UnimplementedChatServerServer struct {
 }
 
+func (UnimplementedChatServerServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+}
 func (UnimplementedChatServerServer) CreateChatServer(context.Context, *CreateChatServerRequest) (*CreateChatServerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateChatServer not implemented")
 }
@@ -220,6 +236,24 @@ type UnsafeChatServerServer interface {
 
 func RegisterChatServerServer(s grpc.ServiceRegistrar, srv ChatServerServer) {
 	s.RegisterService(&ChatServer_ServiceDesc, srv)
+}
+
+func _ChatServer_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServerServer).Login(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.ChatServer/Login",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServerServer).Login(ctx, req.(*LoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _ChatServer_CreateChatServer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -356,6 +390,10 @@ var ChatServer_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "pb.ChatServer",
 	HandlerType: (*ChatServerServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Login",
+			Handler:    _ChatServer_Login_Handler,
+		},
 		{
 			MethodName: "CreateChatServer",
 			Handler:    _ChatServer_CreateChatServer_Handler,
