@@ -69,7 +69,9 @@ message SendMessagesResponse {
 }
 
 message ChatMessage {
-    string username = 1;
-    string text = 2;
-    google.protobuf.Timestamp timestamp = 3;
+    string server_id = 1;
+    string channel_id = 2;
+    string username = 3;
+    string text = 4;
+    google.protobuf.Timestamp timestamp = 5;
 }
