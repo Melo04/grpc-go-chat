@@ -21,7 +21,7 @@ make install
 ```bash
 make run
 ```
-4. Open a new terminal and run the client by signing up with your username and password.
+4. Open a new terminal and start up the chat server by signing up with your username and password.
 ```bash
 make signup username=<your_username> password=<your_password>
 ```

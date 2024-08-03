@@ -10,7 +10,6 @@ import (
 	"os"
 	"strconv"
 	"sync"
-	"time"
 
 	pb "github.com/Melo04/grpc-chat/pb"
 	"google.golang.org/grpc"
@@ -53,7 +52,7 @@ func leaveChatServer(ctx context.Context, client pb.ChatServerClient, serverID, 
 		Username: username,
 	})
 	if err != nil {
-		log.Fatalf("Failed to leave chat server: %v", err)
+		log.Fatalf("Failed to leave chat server: Server does not exist")
 	}
 	log.Printf("Left server: %s", resp.GoodbyeMessage)
 }
@@ -75,7 +74,7 @@ func listMessages(ctx context.Context, client pb.ChatServerClient, serverID, cha
 		ChannelId: channelId,
 	})
 	if err != nil {
-		log.Fatalf("Failed to list messages: %v", err)
+		log.Fatalf("Failed to list messages: Server does not exist")
 	}
 
 	for {
@@ -84,7 +83,7 @@ func listMessages(ctx context.Context, client pb.ChatServerClient, serverID, cha
 			break
 		}
 		if err != nil {
-			log.Fatalf("error receiving message: %v", err)
+			log.Fatalf("Failed to list messages: Channel does not exist")
 		}
 		log.Printf("Message from %s: %s", msg.Username, msg.Text)
 	}
@@ -97,7 +96,7 @@ func getServerIDByName(serverName string) string {
 func sendMessages(ctx context.Context, client pb.ChatServerClient, serverID, channelID, username, text string) {
 	stream, err := client.SendMessages(ctx)
 	if err != nil {
-		log.Fatalf("failed to send message: %v", err)
+		log.Fatalf("Failed to create stream: %v", err)
 	}
 
 	if err := stream.Send(&pb.SendMessageRequest{
@@ -108,7 +107,6 @@ func sendMessages(ctx context.Context, client pb.ChatServerClient, serverID, cha
 	}); err != nil {
 		log.Fatalf("failed to send message: %v", err)
 	}
-	time.Sleep(1 * time.Second)
 
 	reply, err := stream.CloseAndRecv()
 	if err != nil {
@@ -219,7 +217,7 @@ func main() {
 	ctx := metadata.NewOutgoingContext(context.Background(), metadata.Pairs("authorization", res.GetToken()))
 
 	for {
-		fmt.Println("=====> gRPC Chat Server <===== \n1. create server\n2. join server\n3. leave server\n4. create channels\n5. list messages\n6. send message\n7. chat (send and receive messages)\n8. exit\nEnter number to activate command: ")
+		fmt.Println("=====> gRPC Chat Server <===== \n1. create server\n2. join server\n3. leave server\n4. create channels\n5. list messages\n6. send messages\n7. chat (send and receive messages)\n8. exit\nEnter number to activate command: ")
 		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
 		input := scanner.Text()
@@ -247,7 +245,7 @@ func main() {
 			serverID := getServerIDByName(serverName)
 			leaveChatServer(ctx, client, serverID, *username)
 		case 4:
-			fmt.Println("Enter server name: ")
+			fmt.Println("Enter server name to create channel: ")
 			scanner.Scan()
 			serverName := scanner.Text()
 			serverID := getServerIDByName(serverName)
@@ -256,23 +254,22 @@ func main() {
 			channelName := scanner.Text()
 			createChannel(ctx, client, serverID, channelName)
 		case 5:
-			fmt.Println("Enter server name: ")
+			fmt.Println("Enter server name to view messages: ")
 			scanner.Scan()
 			serverName := scanner.Text()
-			fmt.Println("Enter channel name: ")
+			fmt.Println("Enter channel name to view messages: ")
 			scanner.Scan()
 			channelName := scanner.Text()
 			serverID := getServerIDByName(serverName)
 			listMessages(ctx, client, serverID, channelName)
 		case 6:
-			fmt.Println("Enter server name: ")
+			fmt.Println("Enter server name to send messages: ")
 			scanner.Scan()
 			serverName := scanner.Text()
 			serverID := getServerIDByName(serverName)
-			fmt.Println("Enter channel name: ")
+			fmt.Println("Enter channel name to send messages: ")
 			scanner.Scan()
 			channelName := scanner.Text()
-			// send multiple messages to the same channel
 			for {
 				fmt.Print("Enter message (enter q to stop): ")
 				scanner.Scan()
@@ -294,7 +291,6 @@ func main() {
 		case 8:
 			fmt.Println("Exiting...")
 			os.Exit(0)
-			break
 		default:
 			fmt.Println("Invalid command")
 		}

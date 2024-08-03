@@ -64,7 +64,6 @@ func (s *server) CreateChatServer(ctx context.Context, req *pb.CreateChatServerR
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	//generate server id dynamically
 	serverID := uuid.New().String()
 
 	chatServer := &ChatServer{
@@ -78,18 +77,17 @@ func (s *server) CreateChatServer(ctx context.Context, req *pb.CreateChatServerR
 }
 
 func (s *server) CreateChannel(ctx context.Context, req *pb.CreateChannelRequest) (*pb.CreateChannelResponse, error) {
-	if !s.authenticate(ctx) {
-		return nil, grpc.Errorf(codes.Unauthenticated, "not authenticated")
-	}
-
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
+	serverID := req.GetServerId()
+	if _, exists := s.servers[req.GetServerId()]; !exists {
+		return nil, grpc.Errorf(codes.NotFound, "chat server not found")
+	}
+
 	//generate channel id dynamically
 	channelID := uuid.New().String()
-	serverID := req.GetServerId()
-
-	if _, exists := s.channels[serverID]; !exists {
+	if s.channels[serverID] == nil {
 		s.channels[serverID] = make(map[string]string)
 	}
 
@@ -102,6 +100,10 @@ func (s *server) JoinChatServer(ctx context.Context, req *pb.JoinChatServerReque
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
+	if _, exists := s.servers[req.GetServerId()]; !exists {
+		return nil, grpc.Errorf(codes.NotFound, "chat server not found")
+	}
+
 	welcomeMessage := req.GetUsername() + " just slid into the server " + s.servers[req.GetServerId()].Name
 	return &pb.JoinChatServerResponse{WelcomeMessage: welcomeMessage}, nil
 }
@@ -110,15 +112,24 @@ func (s *server) LeaveChatServer(ctx context.Context, req *pb.LeaveChatServerReq
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
+	if _, exists := s.servers[req.GetServerId()]; !exists {
+		return nil, grpc.Errorf(codes.NotFound, "chat server not found")
+	}
+
 	goodbyeMessage := req.GetUsername() + " just left the server"
 	return &pb.LeaveChatServerResponse{GoodbyeMessage: goodbyeMessage}, nil
 }
 
 func (s *server) ListMessages(req *pb.ListMessagesRequest, stream pb.ChatServer_ListMessagesServer) error {
 	s.mu.Lock()
-	messages, ok := s.messages[req.GetChannelId()]
-	s.mu.Unlock()
+	defer s.mu.Unlock()
 
+	serverID := req.GetServerId()
+	if _, ok := s.servers[serverID]; !ok {
+		return fmt.Errorf("chat server not found")
+	}
+
+	messages, ok := s.messages[req.GetChannelId()]
 	if !ok {
 		return fmt.Errorf("channel not found")
 	}
