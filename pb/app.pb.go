@@ -492,6 +492,108 @@ func (x *LeaveChatServerResponse) GetGoodbyeMessage() string {
 	return ""
 }
 
+type CreateChannelRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ServerId    string `protobuf:"bytes,1,opt,name=server_id,json=serverId,proto3" json:"server_id,omitempty"`
+	ChannelName string `protobuf:"bytes,2,opt,name=channel_name,json=channelName,proto3" json:"channel_name,omitempty"`
+}
+
+func (x *CreateChannelRequest) Reset() {
+	*x = CreateChannelRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pb_app_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateChannelRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateChannelRequest) ProtoMessage() {}
+
+func (x *CreateChannelRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pb_app_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateChannelRequest.ProtoReflect.Descriptor instead.
+func (*CreateChannelRequest) Descriptor() ([]byte, []int) {
+	return file_pb_app_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *CreateChannelRequest) GetServerId() string {
+	if x != nil {
+		return x.ServerId
+	}
+	return ""
+}
+
+func (x *CreateChannelRequest) GetChannelName() string {
+	if x != nil {
+		return x.ChannelName
+	}
+	return ""
+}
+
+type CreateChannelResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ChannelId string `protobuf:"bytes,1,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
+}
+
+func (x *CreateChannelResponse) Reset() {
+	*x = CreateChannelResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pb_app_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateChannelResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateChannelResponse) ProtoMessage() {}
+
+func (x *CreateChannelResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_pb_app_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateChannelResponse.ProtoReflect.Descriptor instead.
+func (*CreateChannelResponse) Descriptor() ([]byte, []int) {
+	return file_pb_app_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *CreateChannelResponse) GetChannelId() string {
+	if x != nil {
+		return x.ChannelId
+	}
+	return ""
+}
+
 type ListMessagesRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -504,7 +606,7 @@ type ListMessagesRequest struct {
 func (x *ListMessagesRequest) Reset() {
 	*x = ListMessagesRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pb_app_proto_msgTypes[9]
+		mi := &file_pb_app_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -517,7 +619,7 @@ func (x *ListMessagesRequest) String() string {
 func (*ListMessagesRequest) ProtoMessage() {}
 
 func (x *ListMessagesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pb_app_proto_msgTypes[9]
+	mi := &file_pb_app_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -530,7 +632,7 @@ func (x *ListMessagesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListMessagesRequest.ProtoReflect.Descriptor instead.
 func (*ListMessagesRequest) Descriptor() ([]byte, []int) {
-	return file_pb_app_proto_rawDescGZIP(), []int{9}
+	return file_pb_app_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ListMessagesRequest) GetServerId() string {
@@ -561,7 +663,7 @@ type SendMessageRequest struct {
 func (x *SendMessageRequest) Reset() {
 	*x = SendMessageRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pb_app_proto_msgTypes[10]
+		mi := &file_pb_app_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -574,7 +676,7 @@ func (x *SendMessageRequest) String() string {
 func (*SendMessageRequest) ProtoMessage() {}
 
 func (x *SendMessageRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pb_app_proto_msgTypes[10]
+	mi := &file_pb_app_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -587,7 +689,7 @@ func (x *SendMessageRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SendMessageRequest.ProtoReflect.Descriptor instead.
 func (*SendMessageRequest) Descriptor() ([]byte, []int) {
-	return file_pb_app_proto_rawDescGZIP(), []int{10}
+	return file_pb_app_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *SendMessageRequest) GetServerId() string {
@@ -629,7 +731,7 @@ type SendMessagesResponse struct {
 func (x *SendMessagesResponse) Reset() {
 	*x = SendMessagesResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pb_app_proto_msgTypes[11]
+		mi := &file_pb_app_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -642,7 +744,7 @@ func (x *SendMessagesResponse) String() string {
 func (*SendMessagesResponse) ProtoMessage() {}
 
 func (x *SendMessagesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pb_app_proto_msgTypes[11]
+	mi := &file_pb_app_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -655,7 +757,7 @@ func (x *SendMessagesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SendMessagesResponse.ProtoReflect.Descriptor instead.
 func (*SendMessagesResponse) Descriptor() ([]byte, []int) {
-	return file_pb_app_proto_rawDescGZIP(), []int{11}
+	return file_pb_app_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *SendMessagesResponse) GetMessageCount() int32 {
@@ -680,7 +782,7 @@ type ChatMessage struct {
 func (x *ChatMessage) Reset() {
 	*x = ChatMessage{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pb_app_proto_msgTypes[12]
+		mi := &file_pb_app_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -693,7 +795,7 @@ func (x *ChatMessage) String() string {
 func (*ChatMessage) ProtoMessage() {}
 
 func (x *ChatMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_pb_app_proto_msgTypes[12]
+	mi := &file_pb_app_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -706,7 +808,7 @@ func (x *ChatMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChatMessage.ProtoReflect.Descriptor instead.
 func (*ChatMessage) Descriptor() ([]byte, []int) {
-	return file_pb_app_proto_rawDescGZIP(), []int{12}
+	return file_pb_app_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ChatMessage) GetServerId() string {
@@ -792,7 +894,16 @@ var file_pb_app_proto_rawDesc = []byte{
 	0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x27, 0x0a, 0x0f, 0x67, 0x6f, 0x6f,
 	0x64, 0x62, 0x79, 0x65, 0x5f, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01,
 	0x28, 0x09, 0x52, 0x0e, 0x67, 0x6f, 0x6f, 0x64, 0x62, 0x79, 0x65, 0x4d, 0x65, 0x73, 0x73, 0x61,
-	0x67, 0x65, 0x22, 0x51, 0x0a, 0x13, 0x4c, 0x69, 0x73, 0x74, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67,
+	0x67, 0x65, 0x22, 0x56, 0x0a, 0x14, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61, 0x6e,
+	0x6e, 0x65, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x73, 0x65,
+	0x72, 0x76, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x73,
+	0x65, 0x72, 0x76, 0x65, 0x72, 0x49, 0x64, 0x12, 0x21, 0x0a, 0x0c, 0x63, 0x68, 0x61, 0x6e, 0x6e,
+	0x65, 0x6c, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x63,
+	0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x36, 0x0a, 0x15, 0x43, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x5f, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c,
+	0x49, 0x64, 0x22, 0x51, 0x0a, 0x13, 0x4c, 0x69, 0x73, 0x74, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67,
 	0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x73, 0x65, 0x72,
 	0x76, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x73, 0x65,
 	0x72, 0x76, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65,
@@ -820,7 +931,7 @@ var file_pb_app_proto_rawDesc = []byte{
 	0x74, 0x12, 0x38, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x05,
 	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72,
 	0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70,
-	0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x32, 0xd6, 0x03, 0x0a, 0x0a,
+	0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x32, 0x9e, 0x04, 0x0a, 0x0a,
 	0x43, 0x68, 0x61, 0x74, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x12, 0x2e, 0x0a, 0x05, 0x4c, 0x6f,
 	0x67, 0x69, 0x6e, 0x12, 0x10, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x52, 0x65,
 	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x11, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x6f, 0x67, 0x69, 0x6e,
@@ -839,20 +950,25 @@ var file_pb_app_proto_rawDesc = []byte{
 	0x65, 0x61, 0x76, 0x65, 0x43, 0x68, 0x61, 0x74, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x52, 0x65,
 	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1b, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x65, 0x61, 0x76, 0x65,
 	0x43, 0x68, 0x61, 0x74, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x22, 0x00, 0x12, 0x38, 0x0a, 0x0c, 0x4c, 0x69, 0x73, 0x74, 0x4d, 0x65, 0x73, 0x73,
-	0x61, 0x67, 0x65, 0x73, 0x12, 0x17, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x4d, 0x65,
-	0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0b, 0x2e,
-	0x70, 0x62, 0x2e, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x22, 0x00, 0x30, 0x01, 0x12, 0x44,
-	0x0a, 0x0c, 0x53, 0x65, 0x6e, 0x64, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x12, 0x16,
-	0x2e, 0x70, 0x62, 0x2e, 0x53, 0x65, 0x6e, 0x64, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18, 0x2e, 0x70, 0x62, 0x2e, 0x53, 0x65, 0x6e, 0x64,
-	0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x22, 0x00, 0x28, 0x01, 0x12, 0x2e, 0x0a, 0x04, 0x43, 0x68, 0x61, 0x74, 0x12, 0x0f, 0x2e, 0x70,
-	0x62, 0x2e, 0x43, 0x68, 0x61, 0x74, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x1a, 0x0f, 0x2e,
-	0x70, 0x62, 0x2e, 0x43, 0x68, 0x61, 0x74, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x22, 0x00,
-	0x28, 0x01, 0x30, 0x01, 0x42, 0x20, 0x5a, 0x1e, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
-	0x6f, 0x6d, 0x2f, 0x4d, 0x65, 0x6c, 0x6f, 0x30, 0x34, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x2d, 0x63,
-	0x68, 0x61, 0x74, 0x2f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x73, 0x65, 0x22, 0x00, 0x12, 0x46, 0x0a, 0x0d, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x68,
+	0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x12, 0x18, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74,
+	0x65, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x19, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61, 0x6e, 0x6e,
+	0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x38, 0x0a, 0x0c,
+	0x4c, 0x69, 0x73, 0x74, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x12, 0x17, 0x2e, 0x70,
+	0x62, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0b, 0x2e, 0x70, 0x62, 0x2e, 0x4d, 0x65, 0x73, 0x73, 0x61,
+	0x67, 0x65, 0x22, 0x00, 0x30, 0x01, 0x12, 0x44, 0x0a, 0x0c, 0x53, 0x65, 0x6e, 0x64, 0x4d, 0x65,
+	0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x12, 0x16, 0x2e, 0x70, 0x62, 0x2e, 0x53, 0x65, 0x6e, 0x64,
+	0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18,
+	0x2e, 0x70, 0x62, 0x2e, 0x53, 0x65, 0x6e, 0x64, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x28, 0x01, 0x12, 0x2e, 0x0a, 0x04,
+	0x43, 0x68, 0x61, 0x74, 0x12, 0x0f, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x68, 0x61, 0x74, 0x4d, 0x65,
+	0x73, 0x73, 0x61, 0x67, 0x65, 0x1a, 0x0f, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x68, 0x61, 0x74, 0x4d,
+	0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x22, 0x00, 0x28, 0x01, 0x30, 0x01, 0x42, 0x20, 0x5a, 0x1e,
+	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x4d, 0x65, 0x6c, 0x6f, 0x30,
+	0x34, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x2d, 0x63, 0x68, 0x61, 0x74, 0x2f, 0x70, 0x62, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -867,7 +983,7 @@ func file_pb_app_proto_rawDescGZIP() []byte {
 	return file_pb_app_proto_rawDescData
 }
 
-var file_pb_app_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_pb_app_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_pb_app_proto_goTypes = []interface{}{
 	(*Message)(nil),                  // 0: pb.Message
 	(*LoginRequest)(nil),             // 1: pb.LoginRequest
@@ -878,31 +994,35 @@ var file_pb_app_proto_goTypes = []interface{}{
 	(*JoinChatServerResponse)(nil),   // 6: pb.JoinChatServerResponse
 	(*LeaveChatServerRequest)(nil),   // 7: pb.LeaveChatServerRequest
 	(*LeaveChatServerResponse)(nil),  // 8: pb.LeaveChatServerResponse
-	(*ListMessagesRequest)(nil),      // 9: pb.ListMessagesRequest
-	(*SendMessageRequest)(nil),       // 10: pb.SendMessageRequest
-	(*SendMessagesResponse)(nil),     // 11: pb.SendMessagesResponse
-	(*ChatMessage)(nil),              // 12: pb.ChatMessage
-	(*timestamp.Timestamp)(nil),      // 13: google.protobuf.Timestamp
+	(*CreateChannelRequest)(nil),     // 9: pb.CreateChannelRequest
+	(*CreateChannelResponse)(nil),    // 10: pb.CreateChannelResponse
+	(*ListMessagesRequest)(nil),      // 11: pb.ListMessagesRequest
+	(*SendMessageRequest)(nil),       // 12: pb.SendMessageRequest
+	(*SendMessagesResponse)(nil),     // 13: pb.SendMessagesResponse
+	(*ChatMessage)(nil),              // 14: pb.ChatMessage
+	(*timestamp.Timestamp)(nil),      // 15: google.protobuf.Timestamp
 }
 var file_pb_app_proto_depIdxs = []int32{
-	13, // 0: pb.Message.timestamp:type_name -> google.protobuf.Timestamp
-	13, // 1: pb.ChatMessage.timestamp:type_name -> google.protobuf.Timestamp
+	15, // 0: pb.Message.timestamp:type_name -> google.protobuf.Timestamp
+	15, // 1: pb.ChatMessage.timestamp:type_name -> google.protobuf.Timestamp
 	1,  // 2: pb.ChatServer.Login:input_type -> pb.LoginRequest
 	3,  // 3: pb.ChatServer.CreateChatServer:input_type -> pb.CreateChatServerRequest
 	5,  // 4: pb.ChatServer.JoinChatServer:input_type -> pb.JoinChatServerRequest
 	7,  // 5: pb.ChatServer.LeaveChatServer:input_type -> pb.LeaveChatServerRequest
-	9,  // 6: pb.ChatServer.ListMessages:input_type -> pb.ListMessagesRequest
-	10, // 7: pb.ChatServer.SendMessages:input_type -> pb.SendMessageRequest
-	12, // 8: pb.ChatServer.Chat:input_type -> pb.ChatMessage
-	2,  // 9: pb.ChatServer.Login:output_type -> pb.LoginResponse
-	4,  // 10: pb.ChatServer.CreateChatServer:output_type -> pb.CreateChatServerResponse
-	6,  // 11: pb.ChatServer.JoinChatServer:output_type -> pb.JoinChatServerResponse
-	8,  // 12: pb.ChatServer.LeaveChatServer:output_type -> pb.LeaveChatServerResponse
-	0,  // 13: pb.ChatServer.ListMessages:output_type -> pb.Message
-	11, // 14: pb.ChatServer.SendMessages:output_type -> pb.SendMessagesResponse
-	12, // 15: pb.ChatServer.Chat:output_type -> pb.ChatMessage
-	9,  // [9:16] is the sub-list for method output_type
-	2,  // [2:9] is the sub-list for method input_type
+	9,  // 6: pb.ChatServer.CreateChannel:input_type -> pb.CreateChannelRequest
+	11, // 7: pb.ChatServer.ListMessages:input_type -> pb.ListMessagesRequest
+	12, // 8: pb.ChatServer.SendMessages:input_type -> pb.SendMessageRequest
+	14, // 9: pb.ChatServer.Chat:input_type -> pb.ChatMessage
+	2,  // 10: pb.ChatServer.Login:output_type -> pb.LoginResponse
+	4,  // 11: pb.ChatServer.CreateChatServer:output_type -> pb.CreateChatServerResponse
+	6,  // 12: pb.ChatServer.JoinChatServer:output_type -> pb.JoinChatServerResponse
+	8,  // 13: pb.ChatServer.LeaveChatServer:output_type -> pb.LeaveChatServerResponse
+	10, // 14: pb.ChatServer.CreateChannel:output_type -> pb.CreateChannelResponse
+	0,  // 15: pb.ChatServer.ListMessages:output_type -> pb.Message
+	13, // 16: pb.ChatServer.SendMessages:output_type -> pb.SendMessagesResponse
+	14, // 17: pb.ChatServer.Chat:output_type -> pb.ChatMessage
+	10, // [10:18] is the sub-list for method output_type
+	2,  // [2:10] is the sub-list for method input_type
 	2,  // [2:2] is the sub-list for extension type_name
 	2,  // [2:2] is the sub-list for extension extendee
 	0,  // [0:2] is the sub-list for field type_name
@@ -1023,7 +1143,7 @@ func file_pb_app_proto_init() {
 			}
 		}
 		file_pb_app_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListMessagesRequest); i {
+			switch v := v.(*CreateChannelRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1035,7 +1155,7 @@ func file_pb_app_proto_init() {
 			}
 		}
 		file_pb_app_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SendMessageRequest); i {
+			switch v := v.(*CreateChannelResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1047,7 +1167,7 @@ func file_pb_app_proto_init() {
 			}
 		}
 		file_pb_app_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SendMessagesResponse); i {
+			switch v := v.(*ListMessagesRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1059,6 +1179,30 @@ func file_pb_app_proto_init() {
 			}
 		}
 		file_pb_app_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SendMessageRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pb_app_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SendMessagesResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pb_app_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ChatMessage); i {
 			case 0:
 				return &v.state
@@ -1077,7 +1221,7 @@ func file_pb_app_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_pb_app_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   13,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

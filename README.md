@@ -3,10 +3,10 @@ This is a real-time chat server built using gRPC and Golang. It serves as a fund
 The concept of the chat server is inspired by Discord, allowing users to login, create servers, join servers, send messages, and engage in real-time communication. 
 
 ### Features
-- Unary RPC: Login, CreateChatServer, JoinChatServer, LeaveChatServer
+- Unary RPC: Login, CreateChatServer, JoinChatServer, LeaveChatServer, CreateChannel
 - Server-side streaming RPC: SendMessages
 - Client-side streaming RPC: ListMessages
-- Bidirectional streaming RPC: Chat
+- Bidirectional streaming RPC: Chat (Send and Receive messages)
 
 ### How to run
 1. Clone the repository
@@ -24,26 +24,4 @@ make run
 4. Open a new terminal and run the client by signing up with your username and password.
 ```bash
 make signup username=<your_username> password=<your_password>
-```
-
-### Commands
-
-```bash
-# Create a chat server
-make create server=<server_name>
-
-# Join a chat server
-make join server=<server_name>
-
-# Leave a chat server
-make leave server=<server_name>
-
-# Send a message
-make send server=<server_name> message=<message>
-
-# List messages
-make list server=<server_name>
-
-# Help
-make help
 ```

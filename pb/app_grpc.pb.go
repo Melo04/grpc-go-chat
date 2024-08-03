@@ -30,6 +30,8 @@ type ChatServerClient interface {
 	JoinChatServer(ctx context.Context, in *JoinChatServerRequest, opts ...grpc.CallOption) (*JoinChatServerResponse, error)
 	// Unary RPC to leave a chat server
 	LeaveChatServer(ctx context.Context, in *LeaveChatServerRequest, opts ...grpc.CallOption) (*LeaveChatServerResponse, error)
+	// Unary RPC to create a new channel in a chat server
+	CreateChannel(ctx context.Context, in *CreateChannelRequest, opts ...grpc.CallOption) (*CreateChannelResponse, error)
 	// Server streaming RPC to list messages in a chat server
 	ListMessages(ctx context.Context, in *ListMessagesRequest, opts ...grpc.CallOption) (ChatServer_ListMessagesClient, error)
 	// Client Streaming RPC to send messages to a chat server
@@ -76,6 +78,15 @@ func (c *chatServerClient) JoinChatServer(ctx context.Context, in *JoinChatServe
 func (c *chatServerClient) LeaveChatServer(ctx context.Context, in *LeaveChatServerRequest, opts ...grpc.CallOption) (*LeaveChatServerResponse, error) {
 	out := new(LeaveChatServerResponse)
 	err := c.cc.Invoke(ctx, "/pb.ChatServer/LeaveChatServer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServerClient) CreateChannel(ctx context.Context, in *CreateChannelRequest, opts ...grpc.CallOption) (*CreateChannelResponse, error) {
+	out := new(CreateChannelResponse)
+	err := c.cc.Invoke(ctx, "/pb.ChatServer/CreateChannel", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -191,6 +202,8 @@ type ChatServerServer interface {
 	JoinChatServer(context.Context, *JoinChatServerRequest) (*JoinChatServerResponse, error)
 	// Unary RPC to leave a chat server
 	LeaveChatServer(context.Context, *LeaveChatServerRequest) (*LeaveChatServerResponse, error)
+	// Unary RPC to create a new channel in a chat server
+	CreateChannel(context.Context, *CreateChannelRequest) (*CreateChannelResponse, error)
 	// Server streaming RPC to list messages in a chat server
 	ListMessages(*ListMessagesRequest, ChatServer_ListMessagesServer) error
 	// Client Streaming RPC to send messages to a chat server
@@ -215,6 +228,9 @@ func (UnimplementedChatServerServer) JoinChatServer(context.Context, *JoinChatSe
 }
 func (UnimplementedChatServerServer) LeaveChatServer(context.Context, *LeaveChatServerRequest) (*LeaveChatServerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LeaveChatServer not implemented")
+}
+func (UnimplementedChatServerServer) CreateChannel(context.Context, *CreateChannelRequest) (*CreateChannelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateChannel not implemented")
 }
 func (UnimplementedChatServerServer) ListMessages(*ListMessagesRequest, ChatServer_ListMessagesServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListMessages not implemented")
@@ -306,6 +322,24 @@ func _ChatServer_LeaveChatServer_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ChatServerServer).LeaveChatServer(ctx, req.(*LeaveChatServerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatServer_CreateChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateChannelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServerServer).CreateChannel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.ChatServer/CreateChannel",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServerServer).CreateChannel(ctx, req.(*CreateChannelRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -405,6 +439,10 @@ var ChatServer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LeaveChatServer",
 			Handler:    _ChatServer_LeaveChatServer_Handler,
+		},
+		{
+			MethodName: "CreateChannel",
+			Handler:    _ChatServer_CreateChannel_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

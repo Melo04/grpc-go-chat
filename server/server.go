@@ -25,6 +25,7 @@ type server struct {
 	users    map[string]string
 	servers  map[string]*ChatServer
 	messages map[string][]*pb.Message
+	channels map[string]map[string]string
 }
 
 type ChatServer struct {
@@ -37,6 +38,7 @@ func NewServer() *server {
 		servers:  make(map[string]*ChatServer),
 		messages: make(map[string][]*pb.Message),
 		users:    make(map[string]string),
+		channels: make(map[string]map[string]string),
 	}
 }
 
@@ -73,6 +75,27 @@ func (s *server) CreateChatServer(ctx context.Context, req *pb.CreateChatServerR
 	s.servers[serverID] = chatServer
 
 	return &pb.CreateChatServerResponse{ServerId: serverID}, nil
+}
+
+func (s *server) CreateChannel(ctx context.Context, req *pb.CreateChannelRequest) (*pb.CreateChannelResponse, error) {
+	if !s.authenticate(ctx) {
+		return nil, grpc.Errorf(codes.Unauthenticated, "not authenticated")
+	}
+
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	//generate channel id dynamically
+	channelID := uuid.New().String()
+	serverID := req.GetServerId()
+
+	if _, exists := s.channels[serverID]; !exists {
+		s.channels[serverID] = make(map[string]string)
+	}
+
+	s.channels[serverID][channelID] = req.GetChannelName()
+
+	return &pb.CreateChannelResponse{ChannelId: channelID}, nil
 }
 
 func (s *server) JoinChatServer(ctx context.Context, req *pb.JoinChatServerRequest) (*pb.JoinChatServerResponse, error) {
@@ -146,7 +169,7 @@ func (s *server) Chat(stream pb.ChatServer_ChatServer) error {
 			return err
 		}
 
-		log.Printf("Message received from %s: %s", in.GetUsername(), in.GetText())
+		log.Printf("\nMessage received from %s: %s", in.GetUsername(), in.GetText())
 
 		s.mu.Lock()
 		// ChatMessage doesnt have a channel id, so we use the username as the channel id

@@ -19,6 +19,9 @@ service ChatServer {
     // Unary RPC to leave a chat server
     rpc LeaveChatServer(LeaveChatServerRequest) returns (LeaveChatServerResponse) {}
 
+    // Unary RPC to create a new channel in a chat server
+    rpc CreateChannel(CreateChannelRequest) returns (CreateChannelResponse) {}
+
     // Server streaming RPC to list messages in a chat server
     rpc ListMessages(ListMessagesRequest) returns (stream Message) {}
 
@@ -69,6 +72,15 @@ message LeaveChatServerRequest {
 
 message LeaveChatServerResponse {
     string goodbye_message = 1;
+}
+
+message CreateChannelRequest {
+    string server_id = 1;
+    string channel_name = 2;
+}
+
+message CreateChannelResponse {
+    string channel_id = 1;
 }
 
 message ListMessagesRequest {
